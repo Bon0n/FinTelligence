@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-<form>
-    {{ form|crispy }}
-</form>
+
+{% block content %}
+    {% for institution in object_list %}
+        {{ institution.name }}
+    {% endfor %}
+{% endblock %}

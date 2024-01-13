@@ -1,13 +1,13 @@
 from django import forms
-from finance.models import Institution
+from .models import Institution
 
 
 class InstitutionForm(forms.ModelForm):
-    class META:
+    class Meta:
         model = Institution
-        fields = ('name', 'balance', 'thumb')
+        fields = ('name', 'balance', 'image')
         widgets = {
-            'name': forms.TextInput(),
-            'balance': forms.DecimalField(),
-            'image': forms.ImageField()
+            'name': forms.Select(),
+            'balance': forms.NumberInput(),
+            'image': forms.FileInput(),
         }

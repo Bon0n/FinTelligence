@@ -1,12 +1,21 @@
 from django.db import models
 from django.utils import timezone
 
+INSTITUION_LIST = [
+    ('BRADESCO', 'Bradesco'),
+    ('ITAU', 'Itaú'),
+    ('NUBANK', 'NuBank'),
+    ('C6', 'C6'),
+    ('INTER', 'Inter'),
+    ('SANTANDER', 'Santander'),
+]
+
 
 class Institution(models.Model):
-    name = models.CharField(max_length=20)
-    balance = models.DecimalField(max_digits=15, default=0)
+    name = models.CharField(max_length=20, choices=INSTITUION_LIST)
+    balance = models.DecimalField(max_digits=15, default=0, decimal_places=2)
     creation_date = models.DateTimeField(default=timezone.now)
-    thumb = models.ImageField(upload_to='thumb_institution')
+    image = models.ImageField(upload_to='img_institution')
 
     def __str__(self):
         return self.name
@@ -15,8 +24,24 @@ class Institution(models.Model):
 class Card(models.Model):
     institution = models.ForeignKey('Institution', related_name='cards', on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
-    credit_limit = models.DecimalField(max_digits=15, default=0)
+    credit_limit = models.DecimalField(max_digits=15, default=0,decimal_places=2)
     payment_date = models.DateTimeField()
+
+
+INSTALLMENTS_LIST = [
+    (1, '1x'),
+    (2, '2x'),
+    (3, '3x'),
+    (4, '4x'),
+    (5, '5x'),
+    (6, '6x'),
+    (7, '7x'),
+    (8, '8x'),
+    (9, '9x'),
+    (10, '10x'),
+    (11, '11x'),
+    (12, '12x'),
+]
 
 
 class Debt(models.Model):
@@ -24,9 +49,9 @@ class Debt(models.Model):
     name = models.CharField(max_length=20)
     category = models.CharField(max_length=20)
     description = models.TextField(max_length=200)
-    value = models.DecimalField(max_digits=15)
-    installments = models.SmallIntegerField(max_length=3)
-    current_installment = models.SmallIntegerField(max_length=3)
+    value = models.DecimalField(max_digits=15,decimal_places=2)
+    installments = models.SmallIntegerField(choices=INSTALLMENTS_LIST)
+    current_installment = models.SmallIntegerField()
 
 
 '''

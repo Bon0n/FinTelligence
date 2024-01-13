@@ -15,3 +15,4 @@ class CreateInstitution(CreateView):
 class Home(ListView):
     model = Institution
     template_name = 'home/index.html'
+

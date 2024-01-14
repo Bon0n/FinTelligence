@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form method="post" novalidate>
+    {% csrf_token %}
+    <div style="display:flex; align-items:center; justify-content:center; height:100vh;">
+        <div style="height:50%; width:100%">
+            {{ object }}
+            {{ form|crispy }}
+        </div>
+    </div>
+    <button type="submit" class="btn btn-success">Criar</button>
+</form>
+
+{% endblock %}

@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.views.generic import FormView, CreateView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import FormView, CreateView, ListView, DetailView, UpdateView
 
 from .forms import InstitutionForm
 from .models import Institution
@@ -16,3 +17,8 @@ class Home(ListView):
     model = Institution
     template_name = 'home/index.html'
 
+class InstitutionDetails(UpdateView):
+    form_class = InstitutionForm
+    model = Institution
+    template_name = 'home/detail.html'
+    success_url = reverse_lazy('home/index.html')

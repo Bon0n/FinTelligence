@@ -2,7 +2,13 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-    {% for institution in object_list %}
-        {{ institution.name }}
-    {% endfor %}
+<div style="display:flex; align-items:center; justify-content:center; height:100vh;">
+    <div style="height:50%; width:100%">
+        {% for institution in object_list %}
+            {{ institution.name }}
+        <a href="details/{{ institution.id }}">Detalhes</a>
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}

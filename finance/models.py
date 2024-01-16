@@ -2,7 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
-INSTITUION_LIST = [
+INSTITUTION_LIST = [
     ('BRADESCO', 'Bradesco'),
     ('C6', 'C6'),
     ('INTER', 'Inter'),
@@ -12,9 +12,14 @@ INSTITUION_LIST = [
 ]
 
 
+class UserDetail(models.Model):
+    user = models.ForeignKey(User, related_name='details', on_delete=models.CASCADE)
+    incoming = models.DecimalField(max_digits=15, decimal_places=2, default=0, verbose_name='Renda')
+
+
 class Institution(models.Model):
-    user = models.ForeignKey(User, related_name='users', on_delete=models.CASCADE)
-    name = models.CharField(max_length=20, choices=INSTITUION_LIST, verbose_name='Nome da Instituição')
+    user = models.ForeignKey(User, related_name='institutions', on_delete=models.CASCADE)
+    name = models.CharField(max_length=20, choices=INSTITUTION_LIST, verbose_name='Nome da Instituição')
     balance = models.DecimalField(max_digits=15, default=0, decimal_places=2, verbose_name='Saldo')
     creation_date = models.DateTimeField(default=timezone.now)
     image = models.ImageField(upload_to='img_institution', verbose_name='Imagem da Instituição', null=True, blank=True)
@@ -24,10 +29,14 @@ class Institution(models.Model):
 
 
 class Card(models.Model):
-    institution = models.ForeignKey('Institution', related_name='cards', on_delete=models.CASCADE)
+    institution = models.ForeignKey(Institution, related_name='cards', on_delete=models.CASCADE)
     name = models.CharField(max_length=20)
     credit_limit = models.DecimalField(max_digits=15, default=0, decimal_places=2)
-    payment_date = models.DateTimeField()
+    payment_date = models.DateField()
+    creation_date = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.name
 
 
 INSTALLMENTS_LIST = [
@@ -54,6 +63,7 @@ class Debt(models.Model):
     value = models.DecimalField(max_digits=15, decimal_places=2)
     installments = models.SmallIntegerField(choices=INSTALLMENTS_LIST)
     current_installment = models.SmallIntegerField()
+    creation_date = models.DateTimeField(default=timezone.now)
 
 
 '''

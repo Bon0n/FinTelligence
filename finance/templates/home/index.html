@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
+{% load total_debts %}
 
 {% block content %}
 <div style="display:flex; align-items:center; justify-content:center; height:100vh;">
@@ -20,33 +21,33 @@
                     <div class="accordion-body">
                         <h3>Saldo Atual: {{ institution.balance }}</h3>
                         {% if institution.cards.all %}
-                            {% for card in institution.cards.all %}
-                                {{ card.name }}
+                        {% for card in institution.cards.all %}
+                        {{ card.name }} Total Gasto: {% total_of_debts card.id %}
+                        <div>
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Compra</th>
+                                    <th scope="col">Descrição</th>
+                                    <th scope="col">Parcela Atual</th>
+                                    <th scope="col">Valor Total</th>
+                                </tr>
+                                </thead>
+                                <tbody>
                                 {% for debt in card.debts.all %}
-                                    <div>
-                                        <table class="table">
-                                            <thead>
-                                            <tr>
-                                                <th scope="col">ID</th>
-                                                <th scope="col">Compra</th>
-                                                <th scope="col">Descrição</th>
-                                                <th scope="col">Parcela Atual</th>
-                                                <th scope="col">Parcela Valor</th>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            <tr>
-                                                <th scope="row">{{debt.id}}</th>
-                                                <td>{{ debt.name }}</td>
-                                                <td>{{ debt.description }}</td>
-                                                <td>{{ debt.current_installment }}</td>
-                                                <td>{{ debt.value }}</td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                <tr>
+                                    <th scope="row">{{debt.id}}</th>
+                                    <td>{{ debt.name }}</td>
+                                    <td>{{ debt.description }}</td>
+                                    <td>{{ debt.current_installment }}</td>
+                                    <td>{{ debt.value }}</td>
+                                </tr>
                                 {% endfor %}
-                            {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% endfor %}
                         {% endif %}
                     </div>
                 </div>

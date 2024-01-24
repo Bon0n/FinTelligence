@@ -1,9 +1,23 @@
+from django.contrib import messages
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.contrib.auth.views import LoginView
 from django.views.generic import FormView, CreateView, ListView, DetailView, UpdateView
 
 from .forms import InstitutionForm, CardForm, DebtForm
 from .models import Institution
+
+
+class Login(LoginView):
+    template_name = 'account/login.html'
+    redirect_authenticated_user = True
+
+    def get_success_url(self):
+        return reverse_lazy('home')
+
+    def form_invalid(self, form):
+        messages.error(self.request, 'Credenciais inválidas.')
+        return self.render_to_response(self.get_context_data(form=form))
 
 
 # Create your views here.

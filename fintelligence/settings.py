@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap5',
     'finance',
     'rest_framework',
+    'django.contrib.humanize',
 ]
 
 MIDDLEWARE = [

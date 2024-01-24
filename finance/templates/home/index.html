@@ -1,16 +1,20 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
 {% load total_debts %}
+{% load static %}
+{% load humanize %}
 
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/home/index.css' %}">
+{% endblock %}
 {% block content %}
 <div style="display:flex; align-items:center; justify-content:center; height:100vh;">
     <div style="height:50%; width:100%">
-
         {% for institution in object_list %}
         <div class="accordion accordion-flush" id="accordionFlushExample">
             <div class="accordion-item">
                 <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    <button class="accordion-button collapsed btn-institution bg-dark" type="button" data-bs-toggle="collapse"
                             data-bs-target="#{{ institution.name }}" aria-expanded="false"
                             aria-controls="{{ institution.name }}">
                         {{ institution.name }}
@@ -19,10 +23,13 @@
                 <div id="{{ institution.name }}" class="accordion-collapse collapse"
                      data-bs-parent="#accordionFlushExample">
                     <div class="accordion-body">
-                        <h3>Saldo Atual: {{ institution.balance }}</h3>
+                        <img src="{% static 'svg/piggy-money.svg' %}" width="36px" alt="" srcset="">
+                        <p><b>Saldo Atual: {{ institution.balance|intcomma }}</b></p>
                         {% if institution.cards.all %}
                         {% for card in institution.cards.all %}
-                        {{ card.name }} Total Gasto: {% total_of_debts card.id %}
+                         <img src="{% static 'svg/card.svg' %}" width="36px" alt="Cartão">
+                        {{ card.name }} <b> | </b>
+                        Dívida: {% total_of_debts card.id %}
                         <div>
                             <table class="table">
                                 <thead>

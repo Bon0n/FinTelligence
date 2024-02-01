@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load total_debts %}
+{% load static %}
+{% load humanize %}
+{% block link %}
+<link rel="stylesheet" href="{% static 'css/institution.css' %}">
+<link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+{% endblock %}
+{% block content %}
+<section>
+    <div class="row institutions">
+        {% for institution in institutions %}
+        <div class="col text-center zoom">
+            <a href="#"><h3>{{institution.name}}</h3>
+                {% if institution.image.url %}
+                <img class="rounded-circle" src="{{ institution.image.url }}" width="60px" height="60px"></a>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<section>
+    <div class="row">
+        {% for institution in institutions %}
+        {% if institution.cards.all %}
+        {% for card in institution.cards.all %}
+        <div class="col text-center zoom">
+            <a href="#">
+            <span>{{ card.name }}</span><br>
+            <img src="{% static 'svg/credit_card.svg' %}" width="100px" height="100px" class="" alt=""></a>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+    </div>
+</section>
+<section>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Instituição</th>
+            <th scope="col">Cartão</th>
+            <th scope="col">Compra</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Parcela Atual</th>
+            <th scope="col">Valor Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for institution in institutions %}
+        {% if institution.cards.all %}
+        {% for card in institution.cards.all %}
+        {% for debt in card.debts.all %}
+        <tr>
+            <th scope="row">{{ institution.name }}</th>
+            <td>{{ card.name }}</td>
+            <td>{{ debt.name }}</td>
+            <td>{{ debt.description }}</td>
+            <td>{% current_installment debt.id %}</td>
+            <td>{{ debt.value }}</td>
+        </tr>
+        {% endfor %}
+        {% endfor %}
+        {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}

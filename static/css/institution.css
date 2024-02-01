@@ -1,0 +1,16 @@
+section {
+    margin: 2em;
+    padding: 2em;
+}
+
+.zoom {
+    transition: transform .2s;
+}
+
+.zoom:hover {
+    transform: scale(1.2);
+}
+
+.zoom:focus {
+    transform: scale(1.2);
+}

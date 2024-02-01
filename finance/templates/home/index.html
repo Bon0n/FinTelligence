@@ -47,7 +47,7 @@
                                     <th scope="row">{{debt.id}}</th>
                                     <td>{{ debt.name }}</td>
                                     <td>{{ debt.description }}</td>
-                                    <td>{{ debt.current_installment }}</td>
+                                    <td>{% current_installment debt.id %}</td>
                                     <td>{{ debt.value }}</td>
                                 </tr>
                                 {% endfor %}

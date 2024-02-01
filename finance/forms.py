@@ -28,7 +28,7 @@ class CardForm(forms.ModelForm):
 class DebtForm(forms.ModelForm):
     class Meta:
         model = Debt
-        fields = ('card', 'name', 'category', 'description', 'value', 'installments', 'current_installment')
+        fields = ('card', 'name', 'category', 'description', 'value', 'installments', 'buy_date')
         widgets = {
             'card': forms.Select(),
             'name': forms.TextInput(),
@@ -36,5 +36,5 @@ class DebtForm(forms.ModelForm):
             'description': forms.TextInput(),
             'value': forms.NumberInput(),
             'installments': forms.NumberInput(),
-            'current_installment': forms.NumberInput(),
+            'buy_date': forms.NumberInput(),
         }

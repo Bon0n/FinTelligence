@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.views.generic import FormView, CreateView, ListView, DetailView, UpdateView
 
-from .forms import InstitutionForm, CardForm, DebtForm
+from .forms import InstitutionForm, CardForm, DebtForm, UserDetailForm
 from .models import Institution
 
 
@@ -54,9 +54,14 @@ class InstitutionDetails(UpdateView):
     success_url = reverse_lazy('home/index.html')
 
 
-class InstitutionsList(ListView):
+class GeneralListView(ListView):
     model = Institution
-    template_name = 'lists/list_institutions.html'
+    template_name = 'lists/general.html'
     context_object_name = 'institutions'
+
     def get_queryset(self):
         return Institution.objects.filter(user=self.request.user)
+
+
+class UserUpdateView(UpdateView):
+    form_class = UserDetailForm

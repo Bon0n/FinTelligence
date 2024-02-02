@@ -1,5 +1,14 @@
 from django import forms
-from .models import Institution, Card, Debt
+from .models import Institution, Card, Debt, UserDetail
+
+
+class UserDetailForm(forms.ModelForm):
+    class Meta:
+        model = UserDetail
+        fields = ('incoming',)
+        widgets = {
+            'incoming': forms.TextInput()
+        }
 
 
 class InstitutionForm(forms.ModelForm):

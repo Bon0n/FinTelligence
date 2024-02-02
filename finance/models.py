@@ -88,7 +88,11 @@ class Debt(models.Model):
     creation_date = models.DateTimeField(default=timezone.now)
 
 
-'''
-class Finances(models.Model):
-    name = models.CharField(max_length=15)
-'''
+class RecurringDebt(models.Model):
+    user = models.ForeignKey(User, related_name='recurring_debts', on_delete=models.CASCADE)
+    name = models.CharField(max_length=20)
+    category = models.CharField(max_length=20)
+    description = models.TextField(max_length=200)
+    value = models.DecimalField(max_digits=15, decimal_places=2)
+    recurrence_time_in_months = models.SmallIntegerField()
+    creation_date = models.DateTimeField(default=timezone.now)

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Institution, Card, Debt, UserDetail
+from .models import Institution, Card, Debt, UserDetail, RecurringDebt
 
 
 class UserDetailForm(forms.ModelForm):
@@ -46,4 +46,17 @@ class DebtForm(forms.ModelForm):
             'value': forms.NumberInput(),
             'installments': forms.NumberInput(),
             'buy_date': forms.NumberInput(),
+        }
+
+
+class RecurringDebtForm(forms.ModelForm):
+    class Meta:
+        model = RecurringDebt
+        fields = ('name', 'category', 'description', 'value', 'recurrence_time_in_months')
+        widgets = {
+            'name': forms.TextInput(),
+            'category': forms.TextInput(),
+            'description': forms.TextInput(),
+            'value': forms.NumberInput(),
+            'recurrence_time_in_months': forms.NumberInput(),
         }

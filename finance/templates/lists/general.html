@@ -13,7 +13,7 @@
         {% for institution in institutions %}
         <div class="col text-center zoom">
             <a href="#"><h3>{{institution.name}}</h3>
-                {% if institution.image.url %}
+                {% if institution.image %}
                 <img class="rounded-circle" src="{{ institution.image.url }}" width="60px" height="60px"></a>
             {% endif %}
         </div>

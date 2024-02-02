@@ -1,10 +1,8 @@
 from django.contrib import messages
-from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.views.generic import FormView, CreateView, ListView, DetailView, UpdateView
-
-from .forms import InstitutionForm, CardForm, DebtForm, UserDetailForm
+from .forms import InstitutionForm, CardForm, DebtForm, UserDetailForm, RecurringDebtForm
 from .models import Institution
 
 
@@ -24,19 +22,29 @@ class Login(LoginView):
 class CreateInstitution(CreateView):
     form_class = InstitutionForm
     template_name = 'create/create_institution.html'
-    success_url = 'home/index.html'
+    success_url = reverse_lazy('lists/general.html')
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)
 
 
 class CreateCard(CreateView):
     form_class = CardForm
     template_name = 'create/create_card.html'
-    success_url = 'home/index.html'
+    success_url = reverse_lazy('home/index.html')
 
 
 class CreateDebt(CreateView):
     form_class = DebtForm
     template_name = 'create/create_debt.html'
-    success_url = 'home/index.html'
+    success_url = reverse_lazy('home/index.html')
+
+
+class CreateRecurringDebt(CreateView):
+    form_class = RecurringDebtForm
+    template_name = 'create/create_debt.html'
+    success_url = reverse_lazy('home/index.html')
 
 
 class Home(ListView):
